@@ -5,10 +5,6 @@ using System;
 
 public class TestingIDM : MonoBehaviour
 {
-    public GameObject[] wayPoints; //array of points
-
-    int currentPoint = 0; // integer to keep track of which point we are on
-
     public float speed = 25.0f;
 
     public float rotationSpeed = 10.0f;
@@ -53,6 +49,7 @@ public class TestingIDM : MonoBehaviour
         //This is the net distance between the two vehicles(self and vehicle_lead)
         float currentGap = ComputeGap(trafficControlcar, leadCar);
 
+        //Hardcode for the first car
         if (trafficControlcar.name == "Traffic Control Car (24)")
         {
             currentGap = (float)5;
@@ -111,25 +108,14 @@ public class TestingIDM : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //check to see what where we are in relation to the next wayPoint
-        if (Vector3.Distance(this.transform.position, wayPoints[currentPoint].transform.position) < 3)
-            currentPoint++;
-
-        //if we've checked the distance for all the way points, set currentPoint to 0
-        if (currentPoint >= wayPoints.Length)
-            currentPoint = 0;
-
-        //this.transform.LookAt(wayPoints[currentPoint].transform);
-        Quaternion lookAtWayPoint = Quaternion.LookRotation(wayPoints[currentPoint].transform.position - this.transform.position);
-        this.transform.rotation = Quaternion.Slerp(transform.rotation, lookAtWayPoint, rotationSpeed * Time.deltaTime);
-
         //Calling IDM
         IDM_Model(GameObject.Find("Traffic Control Car (20)"), (float)0.1, GameObject.Find("Traffic Control Car (21)"));
-
         IDM_Model(GameObject.Find("Traffic Control Car (21)"), (float)0.1, GameObject.Find("Traffic Control Car (22)"));
         IDM_Model(GameObject.Find("Traffic Control Car (22)"), (float)0.1, GameObject.Find("Traffic Control Car (23)"));
         IDM_Model(GameObject.Find("Traffic Control Car (23)"), (float)0.1, GameObject.Find("Traffic Control Car (24)"));
-        //IDM_Model(GameObject.Find("Traffic Control Car (24)"), (float)0.1, GameObject.Find("Traffic Control Car (20)"));
+
+        IDM_Model(GameObject.Find("Traffic Control Car (24)"), (float)0.1, GameObject.Find("Traffic Control Car (20)"));
+
         this.transform.Translate(0, 0, speed * Time.deltaTime);
 
     }

@@ -18,6 +18,18 @@ public class TestingIDM : MonoBehaviour
     float delta = 4;
     float minimumSpacing = 1;
     float maxVelocity = 25;
+    
+    //Get the Speed of the current GameObject
+    void getSpeed()
+    {
+        this.speed = gameObject.GetComponent<Rigidbody>().velocity.magnitude;
+    }
+
+    //Initialize the Acceleration of any GameObject to 2
+    void getAcceleration()
+    {
+        this.Acceleration = 2.0f;
+    }
 
     //IDM Model
     static float ComputeGap(GameObject trafficControlCar, GameObject leadCar)// Compute the gap between ego vehicle and lead vehicle
@@ -102,6 +114,8 @@ public class TestingIDM : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        getSpeed();
+        getAcceleration();
         
     }
 
